@@ -1,59 +1,171 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+# Sistem IKM Otomotif
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+Aplikasi web manajemen untuk Industri Kecil Menengah (IKM) Otomotif yang dibangun dengan Laravel dan AdminLTE.
 
-## About Laravel
+## Fitur
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+- ✅ **Authentication & Authorization** - Sistem login dengan 2 role: Admin dan User
+- ✅ **CRUD Kategori** - Manajemen kategori produk (Admin only)
+- ✅ **CRUD Produk** - Manajemen produk otomotif dengan upload gambar
+- ✅ **CRUD Pelanggan** - Manajemen data pelanggan
+- ✅ **CRUD Pesanan** - Manajemen pesanan dengan multiple items
+- ✅ **Role-based Access Control** - Admin memiliki akses penuh, User memiliki akses terbatas
+- ✅ **Dashboard** - Ringkasan statistik dan informasi sistem
+- ✅ **AdminLTE Template** - Interface modern dan responsif
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+## Teknologi
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+- PHP 8.1+
+- Laravel 12
+- AdminLTE 3
+- MySQL/SQLite
+- Bootstrap 4
 
-## Learning Laravel
+## Instalasi
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework. You can also check out [Laravel Learn](https://laravel.com/learn), where you will be guided through building a modern Laravel application.
+1. **Clone repository atau extract project**
+   ```bash
+   cd "path/to/project"
+   ```
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+2. **Install dependencies**
+   ```bash
+   composer install
+   npm install
+   ```
 
-## Laravel Sponsors
+3. **Setup environment**
+   ```bash
+   cp .env.example .env
+   php artisan key:generate
+   ```
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the [Laravel Partners program](https://partners.laravel.com).
+4. **Konfigurasi database di `.env`**
+   ```env
+   DB_CONNECTION=mysql
+   DB_HOST=127.0.0.1
+   DB_PORT=3306
+   DB_DATABASE=ikm_otomotif
+   DB_USERNAME=root
+   DB_PASSWORD=
+   ```
 
-### Premium Partners
+   Atau gunakan SQLite (default):
+   ```env
+   DB_CONNECTION=sqlite
+   ```
 
-- **[Vehikl](https://vehikl.com)**
-- **[Tighten Co.](https://tighten.co)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel)**
-- **[DevSquad](https://devsquad.com/hire-laravel-developers)**
-- **[Redberry](https://redberry.international/laravel-development)**
-- **[Active Logic](https://activelogic.com)**
+5. **Jalankan migrasi dan seeder**
+   ```bash
+   php artisan migrate:fresh --seed
+   ```
 
-## Contributing
+6. **Buat storage link untuk upload gambar**
+   ```bash
+   php artisan storage:link
+   ```
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+7. **Jalankan server development**
+   ```bash
+   php artisan serve
+   ```
 
-## Code of Conduct
+8. **Akses aplikasi di browser**
+   ```
+   http://localhost:8000
+   ```
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+## Akun Default
 
-## Security Vulnerabilities
+### Admin
+- **Email:** admin@automotive.com
+- **Password:** admin123
+- **Akses:** Full access (CRUD semua modul)
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+### User
+- **Email:** user@automotive.com
+- **Password:** user123
+- **Akses:** Limited access (hanya view produk, pelanggan, dan bisa membuat pesanan)
+
+## Struktur Modul
+
+### Admin
+- ✅ Full CRUD Kategori
+- ✅ Full CRUD Produk (dengan upload gambar)
+- ✅ Full CRUD Pelanggan
+- ✅ Full CRUD Pesanan (view, edit, delete semua pesanan)
+
+### User
+- ❌ Tidak bisa akses Kategori (CRUD)
+- ✅ View Produk (hanya lihat)
+- ✅ View Pelanggan (hanya lihat)
+- ✅ Create & View Pesanan (bisa membuat pesanan baru dan melihat detail)
+
+## Database Structure
+
+- **roles** - Role pengguna (admin, user)
+- **users** - Data pengguna dengan role_id
+- **categories** - Kategori produk
+- **products** - Produk otomotif (dengan gambar)
+- **customers** - Data pelanggan
+- **orders** - Pesanan
+- **order_items** - Item dalam setiap pesanan
+
+## Routing
+
+- `/dashboard` - Dashboard utama
+- `/categories` - Manajemen kategori (Admin only)
+- `/products` - Manajemen produk
+- `/customers` - Manajemen pelanggan
+- `/orders` - Manajemen pesanan
+- `/profile` - Edit profil
+
+## File Structure
+
+```
+app/
+├── Http/
+│   ├── Controllers/
+│   │   ├── CategoryController.php
+│   │   ├── ProductController.php
+│   │   ├── CustomerController.php
+│   │   └── OrderController.php
+│   └── Middleware/
+│       └── CheckAdmin.php
+├── Models/
+│   ├── Category.php
+│   ├── Product.php
+│   ├── Customer.php
+│   ├── Order.php
+│   ├── OrderItem.php
+│   ├── Role.php
+│   └── User.php
+database/
+├── migrations/
+└── seeders/
+    └── RoleSeeder.php
+resources/
+└── views/
+    ├── categories/
+    ├── products/
+    ├── customers/
+    ├── orders/
+    └── dashboard.blade.php
+```
+
+## Git
+
+Repository sudah diinisialisasi dengan git. Commit pertama telah dibuat:
+```bash
+git log
+```
+
+## Catatan
+
+- Pastikan folder `storage/app/public` memiliki permission yang benar untuk upload file
+- Untuk production, jangan lupa update `.env` dengan konfigurasi yang sesuai
+- Pastikan `APP_URL` di `.env` sesuai dengan domain aplikasi
 
 ## License
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+Proyek ini dibuat untuk keperluan pembelajaran.

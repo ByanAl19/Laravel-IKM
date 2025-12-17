@@ -21,6 +21,9 @@ class CustomerController extends Controller
      */
     public function create()
     {
+        if (!auth()->user()->isAdmin()) {
+            abort(403, 'Hanya admin yang dapat membuat pelanggan baru.');
+        }
         return view('customers.create');
     }
 
@@ -29,6 +32,9 @@ class CustomerController extends Controller
      */
     public function store(Request $request)
     {
+        if (!auth()->user()->isAdmin()) {
+            abort(403, 'Hanya admin yang dapat membuat pelanggan baru.');
+        }
         $request->validate([
             'name' => 'required|string|max:255',
             'email' => 'nullable|email|unique:customers,email',
@@ -58,6 +64,9 @@ class CustomerController extends Controller
      */
     public function edit(Customer $customer)
     {
+        if (!auth()->user()->isAdmin()) {
+            abort(403, 'Hanya admin yang dapat mengedit pelanggan.');
+        }
         return view('customers.edit', compact('customer'));
     }
 
@@ -66,6 +75,9 @@ class CustomerController extends Controller
      */
     public function update(Request $request, Customer $customer)
     {
+        if (!auth()->user()->isAdmin()) {
+            abort(403, 'Hanya admin yang dapat mengupdate pelanggan.');
+        }
         $request->validate([
             'name' => 'required|string|max:255',
             'email' => 'nullable|email|unique:customers,email,' . $customer->id,
@@ -87,6 +99,9 @@ class CustomerController extends Controller
      */
     public function destroy(Customer $customer)
     {
+        if (!auth()->user()->isAdmin()) {
+            abort(403, 'Hanya admin yang dapat menghapus pelanggan.');
+        }
         $customer->delete();
 
         return redirect()->route('customers.index')

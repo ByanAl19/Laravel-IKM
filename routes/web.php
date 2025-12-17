@@ -23,25 +23,39 @@ Route::middleware('auth')->group(function () {
     // Categories - Admin only
     Route::middleware('admin')->resource('categories', CategoryController::class);
 
-    // Products - Admin full access, User view only
+    // Products routes - urutan penting!
     Route::get('products', [ProductController::class, 'index'])->name('products.index');
-    Route::get('products/{product}', [ProductController::class, 'show'])->name('products.show');
     
+    // Admin only - create harus sebelum route dengan parameter
     Route::middleware('admin')->group(function () {
         Route::get('products/create', [ProductController::class, 'create'])->name('products.create');
         Route::post('products', [ProductController::class, 'store'])->name('products.store');
+    });
+    
+    // View routes - semua user bisa lihat
+    Route::get('products/{product}', [ProductController::class, 'show'])->name('products.show');
+    
+    // Admin only - edit dan delete
+    Route::middleware('admin')->group(function () {
         Route::get('products/{product}/edit', [ProductController::class, 'edit'])->name('products.edit');
         Route::put('products/{product}', [ProductController::class, 'update'])->name('products.update');
         Route::delete('products/{product}', [ProductController::class, 'destroy'])->name('products.destroy');
     });
 
-    // Customers - Admin full access, User view only
+    // Customers routes - urutan penting!
     Route::get('customers', [CustomerController::class, 'index'])->name('customers.index');
-    Route::get('customers/{customer}', [CustomerController::class, 'show'])->name('customers.show');
     
+    // Admin only - create harus sebelum route dengan parameter
     Route::middleware('admin')->group(function () {
         Route::get('customers/create', [CustomerController::class, 'create'])->name('customers.create');
         Route::post('customers', [CustomerController::class, 'store'])->name('customers.store');
+    });
+    
+    // View routes - semua user bisa lihat
+    Route::get('customers/{customer}', [CustomerController::class, 'show'])->name('customers.show');
+    
+    // Admin only - edit dan delete
+    Route::middleware('admin')->group(function () {
         Route::get('customers/{customer}/edit', [CustomerController::class, 'edit'])->name('customers.edit');
         Route::put('customers/{customer}', [CustomerController::class, 'update'])->name('customers.update');
         Route::delete('customers/{customer}', [CustomerController::class, 'destroy'])->name('customers.destroy');

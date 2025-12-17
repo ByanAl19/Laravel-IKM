@@ -63,7 +63,7 @@ return [
     |
     */
 
-    'logo' => '<b>Admin</b>LTE',
+    'logo' => '<i class="fas fa-car"></i> <b>IKM</b> Otomotif',
     'logo_img' => 'vendor/adminlte/dist/img/AdminLTELogo.png',
     'logo_img_class' => 'brand-image img-circle elevation-3',
     'logo_img_xl' => null,
@@ -191,8 +191,8 @@ return [
     */
 
     'classes_body' => '',
-    'classes_brand' => '',
-    'classes_brand_text' => '',
+    'classes_brand' => 'navbar-red',
+    'classes_brand_text' => 'text-white',
     'classes_content_wrapper' => '',
     'classes_content_header' => '',
     'classes_content' => '',

@@ -23,7 +23,21 @@ class ProductController extends Controller
      */
     public function create()
     {
+        if (!auth()->check()) {
+            return redirect()->route('login');
+        }
+        
+        if (!auth()->user()->isAdmin()) {
+            abort(403, 'Hanya admin yang dapat membuat produk baru.');
+        }
+        
         $categories = Category::all();
+        
+        if ($categories->isEmpty()) {
+            return redirect()->route('products.index')
+                ->with('error', 'Belum ada kategori. Silakan tambahkan kategori terlebih dahulu.');
+        }
+        
         return view('products.create', compact('categories'));
     }
 
@@ -32,6 +46,9 @@ class ProductController extends Controller
      */
     public function store(Request $request)
     {
+        if (!auth()->user()->isAdmin()) {
+            abort(403, 'Hanya admin yang dapat membuat produk baru.');
+        }
         $request->validate([
             'category_id' => 'required|exists:categories,id',
             'name' => 'required|string|max:255',
@@ -72,6 +89,9 @@ class ProductController extends Controller
      */
     public function edit(Product $product)
     {
+        if (!auth()->user()->isAdmin()) {
+            abort(403, 'Hanya admin yang dapat mengedit produk.');
+        }
         $categories = Category::all();
         return view('products.edit', compact('product', 'categories'));
     }
@@ -81,6 +101,9 @@ class ProductController extends Controller
      */
     public function update(Request $request, Product $product)
     {
+        if (!auth()->user()->isAdmin()) {
+            abort(403, 'Hanya admin yang dapat mengupdate produk.');
+        }
         $request->validate([
             'category_id' => 'required|exists:categories,id',
             'name' => 'required|string|max:255',
@@ -116,6 +139,9 @@ class ProductController extends Controller
      */
     public function destroy(Product $product)
     {
+        if (!auth()->user()->isAdmin()) {
+            abort(403, 'Hanya admin yang dapat menghapus produk.');
+        }
         if ($product->image) {
             Storage::disk('public')->delete($product->image);
         }
